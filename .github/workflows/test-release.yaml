@@ -48,6 +48,17 @@ jobs:
       contents: write # needed for creating a PR
 
     steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
       - run: |
           touch .notes-file
           echo "HELM_CHART_NAME: ${{ needs.build_images.outputs.RELEASE_HELM_CHART_NAME }}" >> .notes-file
@@ -60,8 +71,9 @@ jobs:
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
+        with:
+          skip_packaging: true
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           CR_PACKAGE_PATH: .
-          CR_SKIP_PACKAGING: true
           CR_SKIP_EXISTING: true
