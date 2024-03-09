@@ -26,8 +26,8 @@ jobs:
         run: |
           helm package deploy/charts/my-sample-chart --app-version v0.0.1 --version v0.0.1
           echo "RELEASE_HELM_CHART_NAME=my-sample-chart" >> $GITHUB_ENV
-          echo "RELEASE_HELM_CHART_VERSION=v0.0.1" >> $GITHUB_ENV
-          echo "RELEASE_HELM_CHART_TAR=my-sample-chart-v0.0.1.tgz" >> $GITHUB_ENV
+          echo "RELEASE_HELM_CHART_VERSION=v0.0.1" >> ${GITHUB_OUTPUT}
+          echo "RELEASE_HELM_CHART_TAR=my-sample-chart-v0.0.1.tgz" >> ${GITHUB_OUTPUT}
 
       - uses: actions/upload-artifact@v4
         with:
