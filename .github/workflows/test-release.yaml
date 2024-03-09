@@ -62,8 +62,6 @@ jobs:
         uses: helm/chart-releaser-action@v1.6.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          CR_OWNER: abvaidya
-          CR_GIT_REPO: ah-test
           CR_PACKAGE_PATH: .
           CR_SKIP_PACKAGING: true
           CR_SKIP_EXISTING: true
