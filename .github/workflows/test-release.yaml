@@ -42,6 +42,8 @@ jobs:
   ah_release:
     runs-on: ubuntu-latest
 
+    needs: build_images
+
     permissions:
       contents: write # needed for creating a PR
 
