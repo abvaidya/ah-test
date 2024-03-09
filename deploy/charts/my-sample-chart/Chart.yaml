@@ -1,0 +1,21 @@
+apiVersion: v2
+
+name: my-sample-chart
+type: application
+description: test chart
+
+annotations:
+  artifacthub.io/alternativeName: my-app
+  artifacthub.io/license: Apache-2.0
+  artifacthub.io/category: security
+  artifacthub.io/recommendations: |
+    - url: https://artifacthub.io/packages/helm/cert-manager/cert-manager-csi-driver
+maintainers:
+  - name: AV
+    email: av@av.com
+    url: https://athenz.io
+sources:
+- https://github.com/abvaidya/ah-test
+
+appVersion: v0.0.0
+version: v0.0.0

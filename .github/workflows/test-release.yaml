@@ -1,0 +1,67 @@
+name: test-release
+on:
+  push:
+    tags:
+      - "v*"
+jobs:
+
+  build_images:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+
+      - id: release
+        run: |
+          helm package deploy/charts/my-sample-chart --app-version v0.0.1 --version v0.0.1
+          echo "RELEASE_HELM_CHART_NAME=my-sample-chart" >> $GITHUB_ENV
+          echo "RELEASE_HELM_CHART_VERSION=v0.0.1" >> $GITHUB_ENV
+          echo "RELEASE_HELM_CHART_TAR=my-sample-chart-v0.0.1.tgz" >> $GITHUB_ENV
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.release.outputs.RELEASE_HELM_CHART_NAME }}-${{ steps.release.outputs.RELEASE_HELM_CHART_VERSION }}.tgz
+          path: ${{ steps.release.outputs.RELEASE_HELM_CHART_TAR }}
+          if-no-files-found: error
+    
+    outputs:
+      RELEASE_HELM_CHART_NAME: ${{ steps.release.outputs.RELEASE_HELM_CHART_NAME }}
+      RELEASE_HELM_CHART_VERSION: ${{ steps.release.outputs.RELEASE_HELM_CHART_VERSION }}
+
+  ah_release:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write # needed for creating a PR
+
+    steps:
+      - run: |
+          touch .notes-file
+          echo "HELM_CHART_NAME: ${{ needs.build_images.outputs.RELEASE_HELM_CHART_NAME }}" >> .notes-file
+          echo "HELM_CHART_VERSION: ${{ needs.build_images.outputs.RELEASE_HELM_CHART_VERSION }}" >> .notes-file
+
+      - id: chart_download
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.build_images.outputs.RELEASE_HELM_CHART_NAME }}-${{ needs.build_images.outputs.RELEASE_HELM_CHART_VERSION }}.tgz
+
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CR_OWNER: abvaidya
+          CR_GIT_REPO: ah-test
+          CR_PACKAGE_PATH: .
+          CR_SKIP_PACKAGING: true
+          CR_SKIP_EXISTING: true

@@ -1,0 +1,10 @@
+sia:
+  enabled: true
+eks:
+  accountId: 000000000000
+  roleName: xxx
+gke:
+  gsa:
+serviceAccount:
+  automount: false
+commonLabels:
