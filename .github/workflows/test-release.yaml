@@ -82,4 +82,4 @@ jobs:
       - name: push helm chart to docker hub
         run: |
           helm registry login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} docker.io
-          helm push "${{ steps.chart_download.outputs.download-path }}/${{ needs.build_images.outputs.RELEASE_HELM_CHART_NAME }}-${{ needs.build_images.outputs.RELEASE_HELM_CHART_VERSION }}.tgz" oci://docker.io/{{ secrets.REGISTRY_USERNAME }}/charts
+          helm push "${{ steps.chart_download.outputs.download-path }}/${{ needs.build_images.outputs.RELEASE_HELM_CHART_NAME }}-${{ needs.build_images.outputs.RELEASE_HELM_CHART_VERSION }}.tgz" oci://docker.io/{{ secrets.REGISTRY_USERNAME }}
