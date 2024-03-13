@@ -24,7 +24,7 @@ jobs:
 
       - id: release
         run: |
-          export VERSION=v0.0.10
+          export VERSION=v0.0.11
           helm package deploy/charts/my-sample-chart --app-version ${VERSION} --version ${VERSION}
           echo "RELEASE_HELM_CHART_NAME=my-sample-chart" >> "$GITHUB_OUTPUT"
           echo "RELEASE_HELM_CHART_VERSION=${VERSION}" >> "$GITHUB_OUTPUT"
@@ -92,4 +92,4 @@ jobs:
           helm version
           cd "${{ steps.chart_download.outputs.download-path }}"
           ls -ltr
-          helm push "${{ needs.build_images.outputs.RELEASE_HELM_CHART_NAME }}-${{ needs.build_images.outputs.RELEASE_HELM_CHART_VERSION }}.tgz" oci://registry-1.docker.io/{{ secrets.REGISTRY_USERNAME }}
+          helm push "${{ needs.build_images.outputs.RELEASE_HELM_CHART_NAME }}-${{ needs.build_images.outputs.RELEASE_HELM_CHART_VERSION }}.tgz" oci://registry-1.docker.io/${{ secrets.REGISTRY_USERNAME }}
