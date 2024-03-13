@@ -8,6 +8,28 @@ entries:
       artifacthub.io/recommendations: |
         - url: https://artifacthub.io/packages/helm/cert-manager/cert-manager-csi-driver
     apiVersion: v2
+    appVersion: v0.0.12
+    created: "2024-03-13T01:10:01.970556931Z"
+    description: test chart
+    digest: 2588e8eb30b7fbece4c5673950b5dca76fb60b6c0c58f25e7189b30ff968782e
+    maintainers:
+    - email: av@av.com
+      name: AV
+      url: https://athenz.io
+    name: my-sample-chart
+    sources:
+    - https://github.com/abvaidya/ah-test
+    type: application
+    urls:
+    - https://github.com/abvaidya/ah-test/releases/download/my-sample-chart-v0.0.12/my-sample-chart-v0.0.12.tgz
+    version: v0.0.12
+  - annotations:
+      artifacthub.io/alternativeName: my-app
+      artifacthub.io/category: security
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/recommendations: |
+        - url: https://artifacthub.io/packages/helm/cert-manager/cert-manager-csi-driver
+    apiVersion: v2
     appVersion: v0.0.11
     created: "2024-03-13T01:05:13.487322397Z"
     description: test chart
@@ -155,4 +177,4 @@ entries:
     urls:
     - https://github.com/abvaidya/ah-test/releases/download/my-sample-chart-v0.0.1/my-sample-chart-v0.0.1.tgz
     version: v0.0.1
-generated: "2024-03-13T01:05:13.48736179Z"
+generated: "2024-03-13T01:10:01.970592157Z"
